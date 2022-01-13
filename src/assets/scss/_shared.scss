@@ -1,0 +1,29 @@
+$primary: #f27240;
+$secondary: #f6a837;
+$white: #fff;
+$black: #000;
+
+@mixin gradient($angle) {
+  background: linear-gradient(to $angle, #f6a937, #da6924);
+  background-size: cover;
+}
+@mixin grid($filas) {
+  display: grid;
+  grid-template-columns: repeat($filas, 1fr);
+}
+@mixin panel {
+  background-color: #f4f4f4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  left: 8%;
+  width: 18%;
+  height: 100vh;
+  padding: 0 0 0 0.5em;
+  padding-bottom: 7%;
+}
+@mixin flex {
+  display: flex;
+  align-items: center;
+}

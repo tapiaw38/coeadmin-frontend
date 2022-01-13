@@ -1,0 +1,286 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+* a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+textarea,
+button,
+input {
+  outline: none;
+  resize: none;
+  border: none;
+}
+
+img {
+  width: 100%;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  background-image: url("~@/assets/img/bg-landing.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+
+.contenedor-1 {
+  width: 100%;
+  max-width: 80vw;
+  margin: 0 auto;
+
+  @media (max-width: 1050px) {
+    max-width: 95vw;
+  }
+}
+
+.logo {
+  max-width: calc(10vw + 3.5rem);
+  width: 100%;
+  display: block;
+}
+
+.panel-tab {
+  .panel-tab-search {
+    margin: 2em 1em;
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    &::after {
+      content: "\1F50D";
+      display: block;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      position: absolute;
+      right: 0;
+      margin: 0 0.3em;
+    }
+  }
+
+  input {
+    padding: 0.3em 1em;
+    border-radius: 33px;
+    font-size: 1rem;
+
+    width: 100%;
+  }
+
+  .panel-tab-inner {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 100%;
+
+    .panel-tab-img {
+      margin: 2em 0;
+
+      img {
+        object-fit: cover;
+        border-radius: 33px;
+        max-height: 200px;
+        display: block;
+        border: 2px solid $white;
+      }
+    }
+  }
+}
+
+.logo {
+  max-width: calc(10vw + 3.5rem);
+  width: 100%;
+  display: block;
+}
+
+.btn {
+  padding: 0.7em 1.2em;
+  border-radius: 33px;
+  border: 2px solid transparent;
+  transition: all 0.5s ease;
+  font-size: 1rem;
+  cursor: pointer;
+
+  &.white {
+    background-color: $white;
+    color: $primary;
+  }
+
+  &.orange {
+    background-color: $primary;
+    color: $white;
+
+    a {
+      color: $white;
+    }
+  }
+}
+
+.button-primary {
+  width: 150px;
+  height: 50px;
+  border-radius: 25px;
+  border: none;
+  background-color: $primary;
+  color: $white;
+  font-size: 1em;
+  cursor: pointer;
+  border: 2px solid $primary;
+  &:hover {
+    background-color: white;
+    color: $primary;
+    transition: 0.5s;
+  }
+}
+
+.panel-title {
+  margin-right: auto;
+  margin-left: 0;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  input {
+    color: $secondary;
+    background-color: transparent;
+    font-size: 1rem;
+
+    &::placeholder {
+      color: $secondary;
+      padding: 0.5em 0.3em;
+    }
+  }
+  &::after {
+    content: "";
+    display: block;
+    width: 80%;
+    height: 2px;
+    color: $white;
+    background-color: $white;
+    position: absolute;
+    top: 120%;
+  }
+  &::before {
+    content: "\1F50D";
+    display: block;
+    width: 20px;
+    cursor: pointer;
+    height: 20px;
+    right: 25%;
+    position: absolute;
+  }
+}
+
+
+/* Table Styles */
+
+.table-wrapper{
+  margin: 10px 130px 10px 10px;
+  box-shadow: 0px 35px 50px rgba( 0, 0, 0, 0.2 );
+}
+
+.fl-table {
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: normal;
+  border: none;
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 100%;
+  white-space: nowrap;
+  background-color: white;
+}
+
+.fl-table td, .fl-table th {
+  text-align: center;
+  padding: 8px;
+}
+
+.fl-table td {
+  border-right: 1px solid #f8f8f8;
+  font-size: 12px;
+}
+
+.fl-table thead th {
+  color: #ffffff;
+  background: $secondary;
+}
+
+.fl-table tr:nth-child(even) {
+  background: #F8F8F8;
+}
+
+/* Responsive */
+
+@media (max-width: 767px) {
+  .fl-table {
+      display: block;
+      width: 100%;
+  }
+  .table-wrapper:before{
+      content: "Scroll horizontally >";
+      display: block;
+      text-align: right;
+      font-size: 11px;
+      color: white;
+      padding: 0 0 10px;
+  }
+  .fl-table thead, .fl-table tbody, .fl-table thead th {
+      display: block;
+  }
+  .fl-table thead th:last-child{
+      border-bottom: none;
+  }
+  .fl-table thead {
+      float: left;
+  }
+  .fl-table tbody {
+      width: auto;
+      position: relative;
+      overflow-x: auto;
+  }
+  .fl-table td, .fl-table th {
+      padding: 20px .625em .625em .625em;
+      height: 60px;
+      vertical-align: middle;
+      box-sizing: border-box;
+      overflow-x: hidden;
+      overflow-y: auto;
+      width: 120px;
+      font-size: 13px;
+      text-overflow: ellipsis;
+  }
+  .fl-table thead th {
+      text-align: left;
+      border-bottom: 1px solid #f7f7f9;
+  }
+  .fl-table tbody tr {
+      display: table-cell;
+  }
+  .fl-table tbody tr:nth-child(odd) {
+      background: none;
+  }
+  .fl-table tr:nth-child(even) {
+      background: transparent;
+  }
+  .fl-table tr td:nth-child(odd) {
+      background: #F8F8F8;
+      border-right: 1px solid #E6E4E4;
+  }
+  .fl-table tr td:nth-child(even) {
+      border-right: 1px solid #E6E4E4;
+  }
+  .fl-table tbody td {
+      display: block;
+      text-align: center;
+  }
+}

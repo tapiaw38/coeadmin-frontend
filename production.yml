@@ -1,0 +1,10 @@
+version: "3.7"
+
+services:
+  lim-frontend:
+    container_name: lim-frontend
+    build:
+      context: .
+      dockerfile: ./compose/production/Dockerfile
+    ports:
+      - "8080:80"
