@@ -10,12 +10,17 @@ const usePositive = () => {
         store.dispatch("editor/addPositive", positive)
     }
 
+    const editPositive = (positive) => {
+        store.dispatch("editor/updatePositive", positive)
+    }
+
     onMounted(() => {
         store.dispatch("editor/loadPositive")
     })
 
     return {
         createPositive,
+        editPositive,
         positives: computed(() => store.getters["editor/getPositive"] )
     };
 };

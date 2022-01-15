@@ -4,6 +4,7 @@ export const loginUser = (state, { user, access_token }) => {
     state.access_token = access_token;
   }
   state.user = user;
+  localStorage.setItem("user", JSON.stringify(user));
   state.status = "authenticated";
 };
 

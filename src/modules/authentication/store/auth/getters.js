@@ -5,7 +5,7 @@ export const currentState = (state) => {
 }
 
 export const userSession = (state) => {
-    return state.user || ''
+    return state.user ||  ''
 } 
 
 

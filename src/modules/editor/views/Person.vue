@@ -27,6 +27,7 @@
                         <th>Celular</th>
                         <th>Distrito</th>
                         <th>Dirección</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,11 +39,23 @@
                             <td>{{person.first_name}}</td>
                             <td>{{person.last_name}}</td>
                             <td>{{person.document}}</td>
-                            <td>{{person.date_birth}}</td>
+                            <td>{{formatDate(person.date_birth)}}</td>
                             <td>{{person.gender}}</td>
                             <td>{{person.phone_number}}</td>
                             <td>{{person.location.district}}</td>
                             <td>{{person.location.address}}</td>
+                            <td>
+                                <button 
+                                >
+                                <img
+                                @click="showModalEdit(person)"
+                                src="../../../../src/assets/img/edit.png" 
+                                alt="edit"
+                                width="30"
+                                height="20"
+                                >
+                                </button>
+                            </td>
                         </tr>
                     </template>
                 </tbody>
@@ -64,6 +77,24 @@
                 <br/>
             </template>
         </default-modal>
+        
+        <default-modal
+            v-show="isModalEditVisible"
+            @close="closeModalEdit"
+        >
+            <template v-slot:header>
+                <h3>Editar</h3>
+            </template>
+            <template v-slot:body>
+                <person-form 
+                :personData="selectedObject"
+                @submitFormPerson="submitFormPersonEdit"
+                />
+            </template>
+            <template v-slot:footer>
+                <br/>
+            </template>
+        </default-modal>
     </div>
 </template>
 
@@ -71,10 +102,14 @@
 import { ref, computed } from "vue";
 
 import useModal from "../../../composables/useModal";
+import useModalEdit from "../../../composables/useModalEdit";
 import usePerson from "../composables/usePerson"
 
 import DefaultModal from "../../../containers/DefaultModal";
 import PersonForm from "../components/forms/PersonForm";
+
+import { formatDate } from "../../../../src/helpers/formatDate"
+
 export default {
     components: {
         DefaultModal,
@@ -82,8 +117,9 @@ export default {
     },
     setup() {
         
-        const { persons, createPerson } = usePerson()
+        const { persons, createPerson, editPerson } = usePerson()
         const { isModalVisible, showModal, closeModal } = useModal();
+        const { isModalEditVisible, showModalEdit, closeModalEdit, selectedObject } = useModalEdit();
         
         let search = ref("");
 
@@ -98,14 +134,38 @@ export default {
             closeModal()
         }
 
+        const submitFormPersonEdit = (p) => {
+            let person = {
+                    id: selectedObject.value.id,
+                    first_name: p.first_name,
+                    last_name: p.last_name,
+                    document: p.document,
+                    date_birth: p.date_birth,
+                    gender: p.gender,
+                    phone_number: p.phone_number,
+                    location: {
+                        district: p.location.district,
+                        address: p.location.address
+                    }
+            };
+            editPerson(person)
+            closeModalEdit()
+        }
+
         return {
             persons,
             isModalVisible,
             showModal,
             closeModal,
             submitFormPerson,
+            isModalEditVisible,
+            showModalEdit,
+            closeModalEdit,
             search,
-            searchPerson
+            searchPerson,
+            selectedObject,
+            submitFormPersonEdit,
+            formatDate
         }
     }
 }
@@ -127,7 +187,7 @@ button {
     background-color: $secondary;
     color: $white;
     border: none;
-    padding: 10px;
+    padding: 5px;
     border-radius: 5px;
     cursor: pointer;
 }
