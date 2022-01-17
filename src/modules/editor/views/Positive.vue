@@ -42,20 +42,39 @@
               </td>
               <td v-else>-</td>
               <td>
-                <button>
-                  <img
-                    @click="showModalEdit(positive)"
-                    src="../../../../src/assets/img/edit.png"
-                    alt="edit"
-                    width="30"
-                    height="20"
-                  />
-                </button>
+                <div class="dropdown">
+                  <button class="dropbtn">
+                    <img
+                      src="../../../../src/assets/img/plus.png"
+                      alt="edit"
+                      width="30"
+                      height="20"
+                    />
+                  </button>
+                  <div class="dropdown-content">
+                    <a @click="showModalEdit(positive)">
+                      Editar {{ positive.person.first_name }} 
+                    </a>
+                    <a @click="showContactModal(positive)">
+                      Agregar contacto
+                    </a>
+                    <a v-if="positive.contacts_count === 0">
+                      No hay contactos
+                    </a>
+                    <a
+                    v-else
+                    @click="showTableModal(positive)"
+                    > 
+                    Ver {{positive.contacts_count}} contactos 
+                    </a>
+                  </div>
+                </div>
               </td>
             </tr>
           </template>
         </tbody>
       </table>
+      <div style="margin-top: 80px;"></div>
     </div>
     <default-modal v-show="isModalVisible" @close="closeModal">
       <template v-slot:header>
@@ -85,6 +104,35 @@
         <br />
       </template>
     </default-modal>
+
+    <default-modal v-show="isContactModalVisible" @close="closeContactModal">
+      <template v-slot:header>
+        <h3>Agregar contacto</h3>
+      </template>
+      <template v-slot:body>
+        <contact-form
+          :positiveData="positiveObject ? positiveObject : {}"
+          @submitFormContact="submitFormContact"
+        />
+      </template>
+      <template v-slot:footer>
+        <br />
+      </template>
+    </default-modal>
+
+    <default-modal v-show="isTableModalVisible" @close="closeTableModal">
+      <template v-slot:header>
+        <h3>Contactos</h3>
+      </template>
+      <template v-slot:body>
+        <table-contact 
+        :contactData="contacts"
+        />
+      </template>
+      <template v-slot:footer>
+        <br />
+      </template>
+    </default-modal>
   </div>
 </template>
 
@@ -94,25 +142,44 @@ import { defineComponent, ref, computed } from "vue";
 import useModal from "../../../composables/useModal";
 import useModalEdit from "../../../composables/useModalEdit";
 import usePositive from "../composables/usePositive";
+import useContact from "../composables/useContact";
 
 import PositiveForm from "../components/forms/PositiveForm";
+import ContactForm from "../components/forms/ContactForm";
+import TableContact from "../components/table/TableContact";
 import DefaultModal from "../../../containers/DefaultModal";
 
 import { formatDate } from "../../../../src/helpers/formatDate";
 export default defineComponent({
   components: {
     PositiveForm,
-    DefaultModal,
+    ContactForm,
+    TableContact,
+    DefaultModal
   },
   setup() {
+
     const { positives, createPositive, editPositive } = usePositive();
     const { isModalVisible, showModal, closeModal } = useModal();
+
     const {
       isModalEditVisible,
       showModalEdit,
       closeModalEdit,
       selectedObject,
     } = useModalEdit();
+
+    const {
+      isContactModalVisible,
+      showContactModal,
+      closeContactModal,
+      positiveObject,
+      createContact,
+      isTableModalVisible,
+      showTableModal,
+      closeTableModal,
+      contacts
+    } = useContact();
 
     let search = ref("");
 
@@ -152,6 +219,15 @@ export default defineComponent({
       closeModalEdit();
     };
 
+    const submitFormContact = (contact) => {
+      const payload = {
+        positiveId: positiveObject.value.id,
+        contact: contact
+      }
+      createContact(payload);
+      closeContactModal();
+    };
+
     return {
       positives,
       isModalVisible,
@@ -166,6 +242,15 @@ export default defineComponent({
       formatDate,
       selectedObject,
       submitFormPositiveEdit,
+      isContactModalVisible,
+      showContactModal,
+      closeContactModal,
+      positiveObject,
+      submitFormContact,
+      isTableModalVisible,
+      showTableModal,
+      closeTableModal,
+      contacts
     };
   },
 });

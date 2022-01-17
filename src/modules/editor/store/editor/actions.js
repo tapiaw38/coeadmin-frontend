@@ -35,3 +35,20 @@ export const updatePositive =  async ({ commit }, positive) => {
   const { data } = await  coeadminApi.put(`/record/${positive.id}/`, positive)
   commit('updatePositive', data)
 }
+
+/* mutations contacts */
+
+export const loadContact =  async({ commit }, id) => {
+  const { data } = await coeadminApi.get(`/record/${id}/contacts/`)
+  commit('setContacts', data.results)
+}
+
+export const addContact = async ({ commit }, { positiveId, contact}) => {
+  const { data } = await coeadminApi.post(`/record/${positiveId}/contacts/`, contact)
+  commit('addContact', data)
+}
+
+export const updateContact = async ({ commit }, { positiveId, contact}) => {
+  const { data } = await coeadminApi.put(`/record/${positiveId}/contacts/${contact.id}/`, contact)
+  commit('updateContact', data)
+}

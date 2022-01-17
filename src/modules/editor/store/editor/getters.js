@@ -1,5 +1,5 @@
 
-/* person getters */
+/* Getters person*/
 
 export const getPersons = (state) => {
     return state.persons;
@@ -16,7 +16,7 @@ export const getPersonById = (state) => ( id = '' ) => {
     return { ...person }
 }
 
-/* positive getters */
+/* Getters positive */
 
 export const getPositive = (state) => {
     return state.positives;
@@ -31,4 +31,10 @@ export const getPositiveById = (state) => ( id = '' ) => {
     const positive = state.positives.find( p => p.id === id )
     if ( !positive ) return
     return { ...positive }
+}
+
+/* Getters contacts */
+
+export const getContacts = (state) => {
+    return state.contacts;
 }
