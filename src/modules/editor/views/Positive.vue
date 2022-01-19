@@ -19,13 +19,17 @@
             <th>Dias de aisl.</th>
             <th>Alta de aisl.</th>
             <th>Fecha de alta</th>
-            <th></th>
+            <th>Editar</th>
           </tr>
         </thead>
         <tbody>
           <template v-for="positive in searchPositive" :key="positive.id">
-            <tr>
+            <tr 
+            :class="[diffDate(positive.isolation.high_insulation_date,new Date()) < 7 ? 'positive-success' : 'positive-warning' ]"
+            >
               <td>
+                {{ positive.person.first_name }}
+                {{ positive.person.last_name }}
                 {{ positive.person.first_name }}
                 {{ positive.person.last_name }}
               </td>
@@ -66,6 +70,11 @@
                     @click="showTableModal(positive)"
                     > 
                     Ver {{positive.contacts_count}} contactos 
+                    </a>
+                    <a
+                    @click="onDeletePositive(positive)"
+                    >
+                    Eliminar
                     </a>
                   </div>
                 </div>
@@ -150,6 +159,7 @@ import TableContact from "../components/table/TableContact";
 import DefaultModal from "../../../containers/DefaultModal";
 
 import { formatDate } from "../../../../src/helpers/formatDate";
+import { diffDate } from "../../../../src/helpers/diffDate";
 export default defineComponent({
   components: {
     PositiveForm,
@@ -159,7 +169,7 @@ export default defineComponent({
   },
   setup() {
 
-    const { positives, createPositive, editPositive } = usePositive();
+    const { positives, createPositive, editPositive, deletePositive } = usePositive();
     const { isModalVisible, showModal, closeModal } = useModal();
 
     const {
@@ -228,6 +238,10 @@ export default defineComponent({
       closeContactModal();
     };
 
+    const onDeletePositive = (positive) => {
+      deletePositive(positive);
+    };
+
     return {
       positives,
       isModalVisible,
@@ -250,7 +264,9 @@ export default defineComponent({
       isTableModalVisible,
       showTableModal,
       closeTableModal,
-      contacts
+      contacts,
+      diffDate,
+      onDeletePositive,
     };
   },
 });

@@ -8,21 +8,19 @@
       </label>
       <input
         type="text"
-        placeholder="Buscar persona por DNI"
+        placeholder="Buscar persona aquí..."
         v-model="document"
-        maxlength="8"
-        minlength="8"
       />
       <select name="select" v-model="contactForm.person">
         <option :value="null" selected>Selecciona una persona</option>
         <option
           :value="null"
-          v-if="filterPersonByDocument(document).length === 0"
+          v-if="filterPersonByDocument.length === 0"
         >
           No hay personas registradas con este DNI
         </option>
         <template
-          v-for="person in filterPersonByDocument(document)"
+          v-for="person in filterPersonByDocument"
           :key="person.id"
         >
           <option :value="person.id">
@@ -61,7 +59,7 @@
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import usePerson from "../../composables/usePerson";
 export default {
   emits: ["submitFormContact"],
@@ -81,13 +79,14 @@ export default {
     const document = ref("");
     let contactEdit = ref(false);
 
-    const filterPersonByDocument = (document) => {
+    const filterPersonByDocument = computed(() => {
       return persons.value.filter(
         (person) => 
-        person.document === document &&
-        person.id !== props.positiveData.person.id
+          person.document.includes(document.value) ||
+          person.first_name.toLowerCase().includes(document.value.toLowerCase()) ||
+          person.last_name.toLowerCase().includes(document.value.toLowerCase())
       );
-    };
+    });
 
     const getPersonById = () => {
       const array = [...persons.value];

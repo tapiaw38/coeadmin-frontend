@@ -14,6 +14,10 @@ const usePositive = () => {
         store.dispatch("editor/updatePositive", positive)
     }
 
+    const deletePositive = (positive) => {
+        store.dispatch("editor/deletePositive", positive)
+    }
+
     onMounted(() => {
         store.dispatch("editor/loadPositive")
     })
@@ -21,6 +25,7 @@ const usePositive = () => {
     return {
         createPositive,
         editPositive,
+        deletePositive,
         positives: computed(() => store.getters["editor/getPositive"] )
     };
 };

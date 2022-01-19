@@ -36,6 +36,12 @@ export const updatePositive = (state, positive) => {
   state.isLoading = false;
 }
 
+export const deletePositive = (state, positive) => {
+  const idx = state.positives.map(p => p.id).indexOf(positive.id);
+  state.positives[idx] = positive;
+  state.isLoading = false;
+}
+
 export const updatePositiveContact = (state, id) => {
   const idx = state.positives.map(p => p.id).indexOf(id);
   state.positives[idx].contacts_count += 1;

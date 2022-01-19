@@ -2,6 +2,10 @@ $primary: #f27240;
 $secondary: #f6a837;
 $white: #fff;
 $black: #000;
+$warning: #f24c40;
+$success: #4caf50;
+$info: #00bcd4;
+$danger: #f44336;
 
 @mixin gradient($angle) {
   background: linear-gradient(to $angle, #f6a937, #da6924);

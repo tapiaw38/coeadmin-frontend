@@ -14,7 +14,9 @@
         </thead>
         <tbody v-if="contacts.length > 0">
           <template v-for="contact in contacts" :key="contact.id">
-            <tr>
+            <tr
+            :class="[diffDate(contact.high_insulation_date,new Date()) < 7 ? 'positive-success' : 'positive-warning' ]"
+            >
               <td>
                 {{ contact.person.first_name }}
                 {{ contact.person.last_name }}
@@ -43,6 +45,7 @@
 <script>
 import { watch, ref } from "vue";
 import { formatDate } from "../../../../../src/helpers/formatDate";
+import { diffDate } from "../../../../../src/helpers/diffDate";
 export default {
   props: {
     contactData: {
@@ -67,6 +70,7 @@ export default {
     return {
       contacts,
       formatDate,
+      diffDate,
     };
   },
 };
